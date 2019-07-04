@@ -1,0 +1,73 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: /Users/b1017579/Documents/PhD/Papers/5-elecsim-validation-optimiser/.texpadtmp/bare_conf.aux
+The style file: IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: ../bibliography.bib
+Repeated entry---line 119 of file ../bibliography.bib
+ : @article{Ponsich2017
+ :                     ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 131 of file ../bibliography.bib
+ : @article{Kannan2009
+ :                    ,
+I'm skipping whatever remains of this entry
+Warning--I didn't find a database entry for "suscom"
+Warning--I didn't find a database entry for "htc-sim"
+Warning--I didn't find a database entry for "rl"
+-- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+Warning--empty journal in Ponsich2017
+Warning--empty journal in T.MurataandH.Ishibuchi1995
+Warning--missing publisher in Holland1975
+Warning--empty journal in Zitzler2006
+Warning--missing publisher in Burke2014
+
+Done.
+You've used 13 entries,
+            4087 wiz_defined-function locations,
+            915 strings with 10119 characters,
+and the built_in function-call counts, 10321 in all, are:
+= -- 847
+> -- 235
+< -- 107
++ -- 128
+- -- 35
+* -- 496
+:= -- 1529
+add.period$ -- 24
+call.type$ -- 13
+change.case$ -- 11
+chr.to.int$ -- 255
+cite$ -- 18
+duplicate$ -- 706
+empty$ -- 762
+format.name$ -- 45
+if$ -- 2388
+int.to.chr$ -- 0
+int.to.str$ -- 13
+missing$ -- 109
+newline$ -- 62
+num.names$ -- 13
+pop$ -- 247
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 797
+stack$ -- 0
+substring$ -- 605
+swap$ -- 613
+text.length$ -- 22
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 13
+warning$ -- 5
+while$ -- 57
+width$ -- 15
+write$ -- 143
+(There were 2 error messages)
