@@ -41,6 +41,7 @@
 \usepackage{amsthm}
 
 \usepackage{mhchem}
+\usepackage{xcolor}
 
 %% The lineno packages adds line numbers. Start line numbering with
 %% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
@@ -63,7 +64,7 @@
 %% use the cortext command for theassociated footnote;
 %% use the ead command for the email address,
 %% and the form \ead[url] for the home page:
- \title{Validating a long-term electricity market model}
+ \title{Validating the long-term electricity market model ElecSim}
 % \tnotetext[label1]{}
  \author{Alexander J. M. Kell}
  \ead{a.kell2@newcastle.ac.uk}
@@ -118,12 +119,30 @@ Long-term energy modelling \sep model validation \sep Machine learning \sep Opti
 
 %% main text
 \section{Introduction}
-\label{intro}
+\label{sec:intro}
 
 
-To limit the effects of climate change, a transition from a fossil-fuel based system to one based on low-carbon, renewable energy is required. The report by the Intergovenmental Panel on Climate Change detailed that reaching and sustaining zero global anthropogenic \ce{CO2} would halt anthropogenic global warming on multi-decadal time scales \cite{Masson-Delmotte2018}. 
+To limit the effects of climate change, a transition from a fossil-fuel based system to one based on low-carbon, renewable energy is required. The report by the Intergovernmental Panel on Climate Change detailed that reaching and sustaining zero global anthropogenic \ce{CO2} would halt anthropogenic global warming on multi-decadal time scales \cite{Masson-Delmotte2018}. 
 
-The Paris Agreement was a declaration signed in 2015 by 195 state parties to plan and regularly report on the contribution made to mitigate global warming \cite{May2002}. It is 
+The Paris Agreement was a declaration signed in 2015 by 195 state parties to plan and regularly report on the contribution made to mitigate global warming \cite{May2002}. Based on this commitment, policy makers require quantitive advice on interventions to aid in the mitigation of climate change and limit global average temperatures to well below 2$^{\circ}$C. 
+
+The decarbonization of electricity generation is of strategic importance for this goal, due to the fact that low-carbon electricity can enable reductions in \ce{CO2} emissions in industry, transport and building sectors~\cite{Salas2017}. 
+
+However, there remain a number of uncertainties in the technological transition to a low-carbon energy supply. Examples of these uncertainties are investor behaviour, future prices of electricity generation and storage, domestic and international policy, energy efficiency and electricity demand. To successfully create effective policies an increase in understanding of these uncertainties and how they interact is required.
+
+Energy modelling is a method that allows policy makers to increase their understanding of policy decision outcomes under a wide range of scenarios. Agent-based modelling (ABM) is a simulation technique that allows for heterogeneous agents to interact and can lead to effects on the aggregated level of the total system, a phenomenon called ``emergence'' \cite{EpsteinJoshuaM.author.GSSS}. Traditional models for analysing electricity systems, such as centralised optimisation models do not account for the heterogeneous nature of electricity investors and are, to some extent, based on obsolete assumptions~\cite{Ringler2016}.
+
+In this paper we motivate that agent-based models are a valid way of complimenting existing models to provide advice to decision makers. We show that the model ElecSim \cite{Kell} can be validated for a 5 year period, starting from the year 2013 until the year 2018, with a mean absolute percentage error of {\color{red} XX\%} and a standard deviation of {\color{red}XX}. Similarly to Nahmmacher \textit{et al.} we demonstrate how clustering of multiple relevant time series such as electricity demand, solar irradiance and wind speed can reduce computational time by selecting representative days~\cite{Nahmmacher2016}. However, distinctly to Nahmacher \textit{et al.} we use a K-means clustering approach \cite{forgy65} as opposed to a hierarchical clustering algorithm described by Ward \cite{doi:10.1080/01621459.1963.10500845}.
+
+We use a genetic algorithm approach to find an optimal set of price curves predicted by generation companies (GenCos) that  adequately model observed investment behaviour in the real-life electricity market in the United Kingdom. However, similar techniques can be employed for other countries of various sizes. We accurately capture the transitional dynamics of the electricity mix in the United Kingdom as shown in Figure \ref{uk_historical_mix}, where there was an $\sim88\%$ drop in coal use, $\sim44\%$ increase in Combined Cycle Gas Turbines (CCGT) and a $\sim111\% $ increase in wind energy.
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.46\textwidth]{figures/introduction/uk_historical_mix.pdf}
+\label{uk_historical_mix}
+\caption{Electricity generation transition from 2013 to 2018 in the United Kingdom.}
+\end{figure}
 
 
 \begin{itemize}
@@ -139,7 +158,7 @@ The Paris Agreement was a declaration signed in 2015 by 195 state parties to pla
 
 
 \section{Material and methods}
-
+\label{sec:methods}
 \begin{itemize}
 	\item Reproducible data
 	\item Summarize previously published results
@@ -147,18 +166,29 @@ The Paris Agreement was a declaration signed in 2015 by 195 state parties to pla
 \end{itemize}
 
 \section{Calculations}
+\label{sec:calculations}
 
 \begin{itemize}
 	\item Practical development
 \end{itemize}
 
 \section{Results}
+\label{sec:results}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.46\textwidth]{figures/results/best_run.pdf}
+\label{uk_historical_mix}
+\caption{Electricity generation transition from 2013 to 2018 in the United Kingdom.}
+\end{figure}
 
 \begin{itemize}
 	\item Clear and concise results
 \end{itemize}
 
 \section{Discussion}
+\label{sec:discussion}
 
 \begin{itemize}
 	\item Significance of work
@@ -166,6 +196,7 @@ The Paris Agreement was a declaration signed in 2015 by 195 state parties to pla
 \end{itemize}
 
 \section{Conclusion}
+\label{sec:conclusion}
 
 \begin{itemize}
 	\item Main conclusions
@@ -189,7 +220,8 @@ This work was supported by the Engineering and Physical Sciences Research Counci
 %% bibitems, please use
 %%
   \bibliographystyle{elsarticle-num} 
-  \bibliography{library}
+  \section*{References}
+  \bibliography{library,bib_custom}
 
 %% else use the following coding to input the bibitems directly in the
 %% TeX file.
