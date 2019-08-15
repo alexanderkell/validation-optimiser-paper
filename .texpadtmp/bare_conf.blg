@@ -16,12 +16,59 @@ Repeated entry---line 131 of file ../bibliography.bib
  : @article{Kannan2009
  :                    ,
 I'm skipping whatever remains of this entry
+Database file #2: ../library.bib
+Repeated entry---line 207 of file ../library.bib
+ : @article{FogelDavidB2009
+ :                         ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 253 of file ../library.bib
+ : @article{Kannan2009
+ :                    ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 664 of file ../library.bib
+ : @article{Yu2015a
+ :                 ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 842 of file ../library.bib
+ : @article{Ponsich2017
+ :                     ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 1146 of file ../library.bib
+ : @book{Burke2014
+ :                ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 1166 of file ../library.bib
+ : @article{Tibshirani1996
+ :                        ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 1796 of file ../library.bib
+ : @article{Zitzler2006
+ :                     ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 1854 of file ../library.bib
+ : @article{T.MurataandH.Ishibuchi1995
+ :                                    ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 3693 of file ../library.bib
+ : @article{Knowles1999
+ :                     ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 3973 of file ../library.bib
+ : @article{Valkanas2014
+ :                      ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 4199 of file ../library.bib
+ : @article{Guha2015
+ :                  ,
+I'm skipping whatever remains of this entry
 Warning--I didn't find a database entry for "suscom"
 Warning--I didn't find a database entry for "htc-sim"
 Warning--I didn't find a database entry for "rl"
 -- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
 -- http://www.michaelshell.org/tex/ieeetran/bibtex/
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+Warning--empty journal in Kell
+Warning--empty year in Kell
 Warning--empty journal in Ponsich2017
 Warning--empty journal in T.MurataandH.Ishibuchi1995
 Warning--missing publisher in Holland1975
@@ -29,45 +76,45 @@ Warning--empty journal in Zitzler2006
 Warning--missing publisher in Burke2014
 
 Done.
-You've used 13 entries,
+You've used 15 entries,
             4087 wiz_defined-function locations,
-            915 strings with 10119 characters,
-and the built_in function-call counts, 10321 in all, are:
-= -- 847
-> -- 235
-< -- 107
-+ -- 128
-- -- 35
-* -- 496
-:= -- 1529
-add.period$ -- 24
-call.type$ -- 13
-change.case$ -- 11
-chr.to.int$ -- 255
-cite$ -- 18
-duplicate$ -- 706
-empty$ -- 762
-format.name$ -- 45
-if$ -- 2388
+            927 strings with 10453 characters,
+and the built_in function-call counts, 11729 in all, are:
+= -- 959
+> -- 265
+< -- 122
++ -- 145
+- -- 39
+* -- 561
+:= -- 1734
+add.period$ -- 28
+call.type$ -- 15
+change.case$ -- 13
+chr.to.int$ -- 294
+cite$ -- 22
+duplicate$ -- 806
+empty$ -- 869
+format.name$ -- 50
+if$ -- 2714
 int.to.chr$ -- 0
-int.to.str$ -- 13
-missing$ -- 109
-newline$ -- 62
-num.names$ -- 13
-pop$ -- 247
+int.to.str$ -- 15
+missing$ -- 123
+newline$ -- 68
+num.names$ -- 15
+pop$ -- 284
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 797
+skip$ -- 901
 stack$ -- 0
-substring$ -- 605
-swap$ -- 613
-text.length$ -- 22
+substring$ -- 697
+swap$ -- 693
+text.length$ -- 24
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 13
-warning$ -- 5
-while$ -- 57
-width$ -- 15
-write$ -- 143
-(There were 2 error messages)
+type$ -- 15
+warning$ -- 7
+while$ -- 67
+width$ -- 17
+write$ -- 159
+(There were 13 error messages)

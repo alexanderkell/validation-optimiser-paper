@@ -21,6 +21,16 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{Jager2006a}
+W.~Jager, ``{Simulating consumer behaviour: a perspective},''
+  \emph{Environmental Policy and Modelling in Evolutionary Economics}, pp.
+  1--28, 2006.
+
+\bibitem{Kell}
+A.~Kell, M.~Forshaw, and A.~S. Mcgough, ``{ElecSim : Monte-Carlo Open-Source
+  Agent-Based Model to Inform Policy for Long-Term Electricity Planning},'' pp.
+  556--565.
+
 \bibitem{Ponsich2017}
 A.~Ponsich, E.~A.~R. Garc{\'{i}}a, R.~A.~M. Guti{\'{e}}rrez, S.~G. de-los
   Cobos~Silva, M.~A.~G. Andrade, and P.~L. Vel{\'{a}}zquez, ``{Solving
