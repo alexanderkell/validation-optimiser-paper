@@ -27,7 +27,7 @@
 %% \documentclass[final,1p,times,authoryear]{elsarticle}
 %% \documentclass[final,1p,times,twocolumn,authoryear]{elsarticle}
 %% \documentclass[final,3p,times,authoryear]{elsarticle}
-\documentclass[final,3p,times,twocolumn,authoryear]{elsarticle}
+\documentclass[final,3p,times,twocolumn,numbers]{elsarticle}
 %% \documentclass[final,5p,times,authoryear]{elsarticle}
 %% \documentclass[final,5p,times,twocolumn,authoryear]{elsarticle}
 
@@ -39,6 +39,8 @@
 \usepackage{amssymb}
 %% The amsthm package provides extended theorem environments
 \usepackage{amsthm}
+
+\usepackage{mhchem}
 
 %% The lineno packages adds line numbers. Start line numbering with
 %% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
@@ -115,25 +117,63 @@ Long-term energy modelling \sep model validation \sep Machine learning \sep Opti
 %% \linenumbers
 
 %% main text
-\section{Test section}
-filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text filler text 
-\label{}
+\section{Introduction}
+\label{intro}
 
 
-\section{Literature Review}
+To limit the effects of climate change, a transition from a fossil-fuel based system to one based on low-carbon, renewable energy is required. The report by the Intergovenmental Panel on Climate Change detailed that reaching and sustaining zero global anthropogenic \ce{CO2} would halt anthropogenic global warming on multi-decadal time scales \cite{Masson-Delmotte2018}. 
 
-Text text text
+The Paris Agreement was a declaration signed in 2015 by 195 state parties to plan and regularly report on the contribution made to mitigate global warming \cite{May2002}. It is 
 
-\section{Materials}
 
-\section{Methods}
+\begin{itemize}
+	\item Energy systems modelling to help transition to low-carbon energy systems (Paris Agreement)
+	\item Application of quantitive analysis to policy
+	\item Use of agent-based models to model heterogeneous actors
+	\item Optimum policy interventions for a smooth transition
+	\item Requirement to validate model using historical data
+	\item Prediction of electricity prices to understand optimal decisions
+	\item Confidence in model under certain scenarios
+\end{itemize}
 
-\section{Results and Discussion}
+
+
+\section{Material and methods}
+
+\begin{itemize}
+	\item Reproducible data
+	\item Summarize previously published results
+	\item Modifications of previous results for this paper
+\end{itemize}
+
+\section{Calculations}
+
+\begin{itemize}
+	\item Practical development
+\end{itemize}
+
+\section{Results}
+
+\begin{itemize}
+	\item Clear and concise results
+\end{itemize}
+
+\section{Discussion}
+
+\begin{itemize}
+	\item Significance of work
+	\item Avoid discussion of public work
+\end{itemize}
 
 \section{Conclusion}
 
+\begin{itemize}
+	\item Main conclusions
+\end{itemize}
 
+\section{Funding Sources}
 
+This work was supported by the Engineering and Physical Sciences Research Council, Centre for Doctoral Training in Cloud Computing for Big Data [grant number EP/L015358/1].
 
 
 
@@ -148,20 +188,20 @@ Text text text
 %% If you have bibdatabase file and want bibtex to generate the
 %% bibitems, please use
 %%
-%%  \bibliographystyle{elsarticle-harv} 
-%%  \bibliography{<your bibdatabase>}
+  \bibliographystyle{elsarticle-num} 
+  \bibliography{library}
 
 %% else use the following coding to input the bibitems directly in the
 %% TeX file.
 
-\begin{thebibliography}{00}
-
-%% \bibitem[Author(year)]{label}
-%% Text of bibliographic item
-
-\bibitem[ ()]{}
-
-\end{thebibliography}
+%\begin{thebibliography}{00}
+%
+%%% \bibitem[Author(year)]{label}
+%%% Text of bibliographic item
+%
+%\bibitem[ ()]{}
+%
+%\end{thebibliography}
 \end{document}
 
 \endinput
