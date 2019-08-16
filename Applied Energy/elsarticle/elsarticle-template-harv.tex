@@ -42,6 +42,7 @@
 
 \usepackage{mhchem}
 \usepackage{xcolor}
+\usepackage{csvsimple,booktabs}
 
 %% The lineno packages adds line numbers. Start line numbering with
 %% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
@@ -132,9 +133,11 @@ However, there remain a number of uncertainties in the technological transition 
 
 Energy modelling is a method that allows policy makers to increase their understanding of policy decision outcomes under a wide range of scenarios. Agent-based modelling (ABM) is a simulation technique that allows for heterogeneous agents to interact and can lead to effects on the aggregated level of the total system, a phenomenon called ``emergence'' \cite{EpsteinJoshuaM.author.GSSS}. Traditional models for analysing electricity systems, such as centralised optimisation models do not account for the heterogeneous nature of electricity investors and are, to some extent, based on obsolete assumptions~\cite{Ringler2016}.
 
-In this paper we motivate that agent-based models are a valid way of complimenting existing models to provide advice to decision makers. We show that the model ElecSim \cite{Kell} can be validated for a 5 year period, starting from the year 2013 until the year 2018, with a mean absolute percentage error of {\color{red} XX\%} and a standard deviation of {\color{red}XX}. Similarly to Nahmmacher \textit{et al.} we demonstrate how clustering of multiple relevant time series such as electricity demand, solar irradiance and wind speed can reduce computational time by selecting representative days~\cite{Nahmmacher2016}. However, distinctly to Nahmacher \textit{et al.} we use a K-means clustering approach \cite{forgy65} as opposed to a hierarchical clustering algorithm described by Ward \cite{doi:10.1080/01621459.1963.10500845}.
+In this paper we motivate that agent-based models are a valid way of complimenting existing models to provide advice to decision makers. We show that the model ElecSim \cite{Kell} can be validated for a 5 year period, starting from the year 2013 until the year 2018, with a root mean squared error of {\color{red} $\sim0.045$} and a standard deviation of {\color{red}$\sim0.16$\%}. Similarly to Nahmmacher \textit{et al.} we demonstrate how clustering of multiple relevant time series such as electricity demand, solar irradiance and wind speed can reduce computational time by selecting representative days~\cite{Nahmmacher2016}. However, distinctly to Nahmacher \textit{et al.} we use a K-means clustering approach \cite{forgy65} as opposed to a hierarchical clustering algorithm described by Ward \cite{doi:10.1080/01621459.1963.10500845}.
 
-We use a genetic algorithm approach to find an optimal set of price curves predicted by generation companies (GenCos) that  adequately model observed investment behaviour in the real-life electricity market in the United Kingdom. However, similar techniques can be employed for other countries of various sizes. We accurately capture the transitional dynamics of the electricity mix in the United Kingdom as shown in Figure \ref{uk_historical_mix}, where there was an $\sim88\%$ drop in coal use, $\sim44\%$ increase in Combined Cycle Gas Turbines (CCGT) and a $\sim111\% $ increase in wind energy.
+We use a genetic algorithm approach to find an optimal set of price curves predicted by generation companies (GenCos) that  adequately model observed investment behaviour in the real-life electricity market in the United Kingdom. However, similar techniques can be employed for other countries of various sizes. We accurately capture the transitional dynamics of the electricity mix in the United Kingdom as shown in Figure \ref{uk_historical_mix}, where there was an $\sim88\%$ drop in coal use, $\sim44\%$ increase in Combined Cycle Gas Turbines (CCGT), $\sim111\% $ increase in wind energy and increase in solar from near zero to $\sim 1250$MW.
+
+
 
 
 \begin{figure}
@@ -175,6 +178,11 @@ We use a genetic algorithm approach to find an optimal set of price curves predi
 \section{Results}
 \label{sec:results}
 
+\begin{table}[htb]
+    \centering
+\csvautobooktabular{table_data/results/error_metrics.csv}
+    \caption{Error metrics for time series forecast from 2013 to 2018}\label{table:metrics}
+\end{table}
 
 
 \begin{figure}
