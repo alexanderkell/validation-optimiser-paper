@@ -135,14 +135,14 @@ Energy modelling is a method that allows policy makers to increase their underst
 
 In this paper we motivate that agent-based models are a valid way of complimenting existing models to provide advice to decision makers. We show that the model ElecSim \cite{Kell} can be validated over a 5 year period, starting from the year 2013 and ending in the year 2018, with a root mean squared error of {\color{red} $\sim0.045$} and a standard deviation of {\color{red}$\sim0.16$}. Similarly to Nahmmacher \textit{et al.} we demonstrate how clustering of multiple relevant time series such as electricity demand, solar irradiance and wind speed can reduce computational time by selecting representative days~\cite{Nahmmacher2016}. However, distinctly to Nahmacher \textit{et al.} we use a K-means clustering approach \cite{forgy65} as opposed to a hierarchical clustering algorithm described by Ward \cite{doi:10.1080/01621459.1963.10500845}.
 
-We use a genetic algorithm approach to find an optimal set of price curves predicted by generation companies (GenCos) that  adequately model observed investment behaviour in the real-life electricity market in the United Kingdom. However, similar techniques can be employed for other countries of various sizes \cite{Kell}. We are able to model the transitional dynamics of the electricity mix in the United Kingdom as shown in Figure \ref{uk_historical_mix}, where there was an $\sim88\%$ drop in coal use, $\sim44\%$ increase in Combined Cycle Gas Turbines (CCGT), $\sim111\% $ increase in wind energy and increase in solar from near zero to $\sim 1250$MW.
+We use a genetic algorithm approach to find an optimal set of price curves predicted by generation companies (GenCos) that  adequately model observed investment behaviour in the real-life electricity market in the United Kingdom. However, similar techniques can be employed for other countries of various sizes \cite{Kell}. We are able to model the transitional dynamics of the electricity mix in the United Kingdom as shown in Figure \ref{fig:uk_historical_mix}, where there was an $\sim88\%$ drop in coal use, $\sim44\%$ increase in Combined Cycle Gas Turbines (CCGT), $\sim111\% $ increase in wind energy and increase in solar from near zero to $\sim 1250$MW.
 
 
 \begin{figure}
 \centering
 \includegraphics[width=0.46\textwidth]{figures/introduction/uk_historical_mix.pdf}
-\label{uk_historical_mix}
 \caption{Electricity generation transition from 2013 to 2018 in the United Kingdom.}
+\label{fig:uk_historical_mix}
 \end{figure}
 
 There is a desire to validate the ability of energy-models to make long-term predictions. Validation increases confidence in the outputs of a model and leads to an increase in trust amongst the public and policy makers. However, energy models are frequently criticised for being insufficiently validated, with the performance of models rarely checked against historical outcomes \cite{Beckman2011}.
@@ -248,12 +248,102 @@ Due to computational restrictions, energy-system models often represent variatio
 
 A number of authors have shown that models with an insufficient time-step granularity leads to an underestimation of the variability of intermittent renewable energy resources (IRES). This leads to an overestimation of the uptake of IRES and an underestimation of flexible technologies~\cite{Ludig2011,Haydt2011}. We exhibit the same problems in our paper \cite{Kell} and in Section \ref{sec:results}.
 
+To overcome this problem, we used k-means clustering to select representative days of electricity demand, solar irradiance and wind speed for both onshore and offshore in the UK. We used simulated data for wind and solar by Staffell \textit{et al.} \cite{Staffell2016} for the United Kingdom. For load data we used data from gridwatch.co.uk \cite{gridwatch}.
+
+To select the optimum number of days we used a technique similar to Poncelet \textit{et al.} \cite{Poncelet2017}. We trialled the number of clusters against three different metrics: correlation, normalised root mean squared error and relative energy error ($REE_{av}$).
+
+
+
+Firstly, the average capacity factor over the selected time series should preserve the annual electricity demand load factors. To evaluate the ability for the representative days, the average value over all the considered time series $p\in P$ compared to the actual average value is used as a metric. This is referred to as $REE_{av}$. Note that in this text $\left|\cdot\right|$ refers to the absolute value, and $\left|\left|\cdot\right|\right|$ refers to the cardinality of a set. Below, the index $t\in T$ refers to a specific time step of the original time series (e.g. hourly interval).
+
+\begin{equation}
+	REE_{av}=\frac
+	{\sum\limits_{p\in P}\left(\left|
+	\frac
+	{\sum\limits_{t\in T}DC_{p,t}-\sum\limits_{t\in T}\widetilde{DC}_{p,t}}
+	{\sum\limits_{t\in T}DC_{p,t}}
+	\right|\right)
+	}
+	{\left|\left|P\right|\right|}
+\end{equation}
+
+Another metric is that the distribution of electricity demand and capacity factors for wind and solar must be similar to that of the actual time series. The distribution can be represented by a duration curve ($DC$) of the original time series. We therefore used the normalised root mean squared error between the actual duration curve and representative duration curve. In this context, the duration curve can be constructed by sorting the capacity factor and load data from high to low. The $x-$axis exhibits the proportion of time that each capacity factor represents. The approximation of the duration curve is represented in this text as $\widetilde{DC}_p$.
+
+%\begin{equation}
+%	NRMSE_{av}=\frac
+%	{\sum\limits_{p\in P}\left(
+%	\frac{\sqrt{\frac{1}{\left|\left|T\right|\right|}}\cdot \sum\limits_{t\in T}
+%	\left(
+%	DC_{p,t}-\widetilde{DC}_{p,t}
+%	\right)^2}{max(DC_p)-min(DC_p)}}
+%	\right
+%	}
+%	{\left|\left|P\right|\right|}
+%\end{equation}
+
+%\begin{equation}
+%	NRMSE_{av}=\frac
+%	{\sum\limits_{p\in P}\left(\frac
+%	{
+%	\sqrt{
+%	\frac{1}{\left|\left|T\right|\right|}
+%	\cdot
+%	\sum\limits_{t\in T}
+%	\left(
+%	DC_{p,t}-\widetilde{DC}_{p,t}
+%	\right)^2
+%	}
+%	}
+%	{max(DC_p)-min(DC_p)\right)}
+%	}{
+%	\left|\left|P\right|\right|
+%	}
+%\end{equation}
+
+\begin{equation}
+	NRMSE_{av}=\frac
+	{\sum\limits_{p\in P}\left(\frac
+	{\sqrt{
+	\frac{1}{\left|\left|T\right|\right|}
+	\cdot
+	\sum\limits_{t\in T}(DC_{p,t}-\widetilde{DC}_{p,t})^2}
+	}
+	{max(DC_p)-min(DC_p)}
+	\right)}
+	{\left|\left|P\right|\right|}
+\end{equation}
+
+
+The final metric used is the correlation between the different time series. This is used due to the fact that wind and solar output influences the load within a single region. This is referred to as the average correlation error ($CE_{av}$).
+
+\begin{equation}
+	CE_{av}=\frac{2}{\left|\left|P\right|\right|\cdot(\left|\left|P\right|\right|-1)}\cdot
+	\left(
+	\sum\limits{p_i\in P}\sum\limits_{p_j\in P,j>i}
+	\left|
+	corr_{p_i,p_j}-\widetilde{corr}_{p_i,p_j}
+	\right|
+	\right)
+\end{equation}
+
+Where $corr_{p1,p2}$ is the Pearson correlation coefficient between two time series $p_1,p_2\in P$. Here, $V_{p1,t}$ represents the value of time series $p_1$ and $p_2$ respectively. 
+
+\begin{equation}
+	corr_{p1,p2}=\frac
+	{\sum\limits_{t\in T}\left(\left(V_{p1,t}-\overline{V}_{p1}\right)\cdot\left(V_{p2,t}-\overline{V}_{p2}\right)\right)}
+	{\sqrt{
+	\sum\limits_{t\in T} \left(V_{p_1,t}-\overline{V}_{p1}\right)^2\cdot\sum\limits_{t\in T}\left(V_{p2,t}-\overline{V}_{p2}\right)^2
+	}}
+\end{equation}
+
+Figure \ref{fig:clusters_compared} displays the number of clusters plot against each of the error metrics. For this experiment we chose eight clusters, due to eight being the smallest number with the smallest error metrics. After eight clusters the error metrics do not improve significantly, and $REE_{av}$ deteriorates with number of clusters. However, selecting a number smaller than eight clusters leads to a significant deterioration for both $CE_{av}$ and $NRMSE_{av}$
+
 
 \begin{figure*}
 \centering
 \includegraphics[width=\textwidth]{figures/methods_and_materials/clusters_compared.pdf}
-\label{cluseters_compared}
 \caption{Comparison of number of clusters for accuracy.}
+\label{fig:clusters_compared}
 \end{figure*}
  
 \subsection{Problem Formulation}
