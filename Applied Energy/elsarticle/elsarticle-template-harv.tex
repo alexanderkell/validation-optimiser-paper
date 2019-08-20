@@ -250,7 +250,9 @@ A number of authors have shown that models with an insufficient time-step granul
 
 To overcome this problem, we used k-means clustering to select representative days of electricity demand, solar irradiance and wind speed for both onshore and offshore in the UK. We used simulated data for wind and solar by Staffell \textit{et al.} \cite{Staffell2016} for the United Kingdom. For load data we used data from gridwatch.co.uk \cite{gridwatch}.
 
-To select the optimum number of days we used a technique similar to Poncelet \textit{et al.} \cite{Poncelet2017}. We trialled the number of clusters against three different metrics: correlation, normalised root mean squared error and relative energy error ($REE_{av}$).
+We tried using the average value of each of the clusters, which we will refer to in this text as the ``centroids'' technique. We also tried choosing the day that was closest to the centroid by euclidean distance. This will be referred to in the rest of this text as the ``medoids'' technique.
+
+To select the optimum number of days we used a technique similar to Poncelet \textit{et al.} \cite{Poncelet2017}. We trialled the number of clusters against three different metrics: correlation, normalised root mean squared error and relative energy error ($REE_{av}$). 
 
 
 
@@ -336,7 +338,9 @@ Where $corr_{p1,p2}$ is the Pearson correlation coefficient between two time ser
 	}}
 \end{equation}
 
-Figure \ref{fig:clusters_compared} displays the number of clusters plot against each of the error metrics. For this experiment we chose eight clusters, due to eight being the smallest number with the smallest error metrics. After eight clusters the error metrics do not improve significantly, and $REE_{av}$ deteriorates with number of clusters. However, selecting a number smaller than eight clusters leads to a significant deterioration for both $CE_{av}$ and $NRMSE_{av}$
+Figure \ref{fig:clusters_compared} displays the number of clusters plot against each of the error metrics. For this experiment we chose eight clusters, due to eight being the smallest number with the smallest error metrics. After eight clusters the error metrics do not improve significantly, and $REE_{av}$ deteriorates with number of clusters. However, selecting a number smaller than eight clusters leads to a significant deterioration for both $CE_{av}$ and $NRMSE_{av}$.
+
+The error metrics do not show a significant from using either the centroids or medoids technique. However, we chose to use the medoids technique as we believe this would more accurately model a single day.
 
 
 \begin{figure*}
