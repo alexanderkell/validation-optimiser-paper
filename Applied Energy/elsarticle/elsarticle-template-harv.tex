@@ -65,7 +65,7 @@
 %% use the cortext command for theassociated footnote;
 %% use the ead command for the email address,
 %% and the form \ead[url] for the home page:
- \title{Validating the long-term electricity market model ElecSim}
+ \title{Validating the long-term electricity market model ElecSim using genetic algorithms}
 % \tnotetext[label1]{}
  \author{Alexander J. M. Kell}
  \ead{a.kell2@newcastle.ac.uk}
@@ -147,7 +147,7 @@ We use a genetic algorithm approach to find an optimal set of price curves predi
 
 There is a desire to validate the ability of energy-models to make long-term predictions. Validation increases confidence in the outputs of a model and leads to an increase in trust amongst the public and policy makers. However, energy models are frequently criticised for being insufficiently validated, with the performance of models rarely checked against historical outcomes \cite{Beckman2011}.
 
-The model OSeMOSYS \cite{Howells2011}, however, is validated against the similar model MARKAL\slash TIMES. The model PowerACE shows that realistic prices are achieved through modelling, however do not indicate success in modelling investor behaviour \cite{Ringler2012}.
+The model OSeMOSYS \cite{Howells2011}, however, is validated against the similar model MARKAL\slash TIMES.  Whereas the model PowerACE shows that realistic prices are achieved through modelling, however do not indicate success in modelling investor behaviour \cite{Ringler2012}.
 
 However, under the definition by Hodges \textit{et al.} \cite{Hodges} long-range energy forecasts are not validatable \cite{Craig2002}. Under this definition, validatable models must be observable, exhibit constancy of structure in time, exhibit constancy across variations in conditions not specified in the model and it must be possible to collect ample data \cite{Hodges}.
 
@@ -157,7 +157,7 @@ This, however, does not mean that energy-modelling is not useful for providing a
 
 A retrospective study published in 2002 by Craig \textit{et al.} focused on the ability for forecasters to accurately predict electricity demand from the 1970s \cite{Craig2002}. They found that actual energy usage in 2000 was at the very lowest end of the forecasts, with only one exception. They found that these forecasts underestimated unmodelled shocks such as the oil crises which lead to increased energy efficiency.
 
-Hoffman \textit{et al.} also developed a retrospective validation of a predecessor of the current MARKAL\slash TIMES model named Reference Energy System \cite{Hoffman_1973}, and the Brookhaven Energy System Optimization Model \cite{ERDA_48}. These were studies applied in the 70s and 80s to develop projections to the Year 2000 . They found that the models were able to be descriptive, but were not entirely accurate in terms of predictive ability. They found that emergent behaviours in response to policy had a strong impact on forecasting accuracy. They concluded that forecasts must be expressed in highly conditioned terms \cite{Hoffman2011}. 
+Hoffman \textit{et al.} also developed a retrospective validation of a predecessor of the current MARKAL\slash TIMES model named Reference Energy System \cite{Hoffman_1973}, and the Brookhaven Energy System Optimization Model \cite{ERDA_48}. These were studies applied in the 70s and 80s to develop projections to the year 2000 . They found that the models were able to be descriptive, but were not entirely accurate in terms of predictive ability. They found that emergent behaviours in response to policy had a strong impact on forecasting accuracy. They concluded that forecasts must be expressed in highly conditioned terms \cite{Hoffman2011}. 
 
 Schurr \textit{et al.} argued against predicting too far ahead in energy modelling due to the uncertainties involved \cite{Schurr_1961}. However, they specify that long-term energy forecasting is useful to provide basic information on energy consumption and availability which is helpful in public debate and in guiding policy makers.
 
@@ -167,7 +167,7 @@ Ascher concurs with this view, and states that the most significant factor in mo
 Work by Koomey \textit{et al.} expresses the importance of conducting retrospective studies to help improve models \cite{Koomey2003}. For example, a model can be rerun using historical data in order to determine how much of the error in the original forecast resulted from structural problems in the model itself and how much from incorrect specification of the fundamental drivers of the forecast \cite{Koomey2003}.
 
 
-It is for the reasons described in this section that this paper focuses on a relatively short-term (5 year) horizon window when choosing to validate the model. This process helped us to improve the model validation and understand the limitations of our model.
+It is for the reasons previously described that this paper focuses on a shorter-term (5 year) horizon window when validating the model. This enabled us to increase confidence that the dynamics of the model worked without external shocks and could provide descriptive advice to stakeholders.
 
 
 %\begin{itemize}
@@ -184,6 +184,83 @@ It is for the reasons described in this section that this paper focuses on a rel
 
 \section{Material and methods}
 \label{sec:methods}
+
+The model, ElecSim, is made up of five distinct sections: power plant data; scenario data; the time-steps of the algorithm; the power exchange and the investment algorithm. ElecSim has been previously published \cite{Kell}, however, amendments have since been made to the model in the form of efficiency improvements as well as increasing the granularity of time-steps from yearly to representative days. In this paper we have used 8 representative days for electricity demand, solar irradiance and offshore and onshore wind speed.
+
+In this section we summarize previously published results and detail the modifications made for this paper. In this paper we initialised the model to a scenario of the United Kingdom, however, the model is generalisable to any country and is dependent on input data.
+
+\subsection{Plant Data}
+
+The simulation was initialised with every power plant and generation company (GenCo) in the United Kingdom using the Department of Business, Energy and Industrial strategy of the British government for the year 2013 \cite{dukes_511}. The individual costs of these power plants were also initialised with data from the Department of Business, Energy and Industrial strategy of the British government \cite{Department2016}. For power plants that were out of the scope of this dataset (pre-2018), historical levelized cost of electricity (LCOE) values were used to infer the granular costs by a scaling factor from the International Energy Agency (IEA)~\cite{IEA2015}. Historical efficiency was also taken from the Energy Information Administration (EIA) \cite{eia_efficiency}. Each of the initialised power plants were initialized with a scaling factor which modified the operation and maintenance costs stated in the dataset provided \cite{Department2016}. This was done to take into account differences in labor, land and breakages between projects. This was sampled from a uniform distribution between 0.3 and 2.0. As well as varying operation and maintenance costs, each of the GenCos purchased fuel at varying prices. This was done to model the element of chance and differing hedging strategies of each of the GenCos. The distribution that this was sampled from was taken from fitting an ARIMA model and sampling from the standard deviation of the residuals \cite{ARIMA}.
+
+Financing of the project was provided by stock shares and debt, with nuclear power plants given an average weighted average cost of capital (WACC) of $0.1$ and non-nuclear given a WACC of $0.059$ \cite{KPMG2017, Paper2012}. Where WACC is the rate that a company is expected to pay on average for its stock and debt.
+
+\subsection{Power Exchange}
+
+ElecSim is modelled on a uniform pricing market. This means that bids are sorted with respect to price, and accepted in merit-order. Merit-order in this case indicates the cheapest bids are accepted first. Uniform pricing is a market mechanism in which the highest accepted bid price is paid to all generators irrespective of price bid. This mechanism encourages GenCos to bid their short run marginal cost (SRMC) to ensure that their power plant is dispatched whilst not losing money whilst dispatching.
+
+In the case of ElecSim SRMC is defined as follows:
+\begin{equation}
+\label{eq:srmc}
+	SRMC = O\&M_{var}+CO_{2price}+\left(fuel_{price}\times mod_{fuel}\right)
+\end{equation}
+
+Where $O\&M_{var}$ is the variable operating and maintenance costs, $CO_{2price}$ is the carbon tax, $fuel_{price}$ is the cost of the respective fuel and $mod_{fuel}$ is the fuel price modifier. These are all in the units of  $\textsterling\slash MWh$. 
+
+Each of the GenCos submit a bid based on the SRMC of each of their plants at the start of every representative day, to model the day-ahead market. 
+\begin{equation}
+	Bid = SRMC\times Cap_{fac} \times Avail_{fac}
+\end{equation}
+
+Where $Cap_{fac}$ and $Avail_{fac}$ is the capacity and availability factors of the plants respectively. The capacity factor is defined as the actual electrical energy produced over a given time period divided by the maximum possible electrical energy is could have produced. This can be impacted by regulatory constraints, market forces and resource availability. For example, higher capacity factors are common for photovoltaics in the summer, and lower in winter \cite{Kell}.
+
+\begin{equation}
+	Cap_{fac}=\frac{energy_{produced}}{energy_{max}}
+\end{equation}
+
+ Availability is the percentage of time that a power plant is able to produce electricity. This is typically reduced by outages and breakdowns. We integrate historical data to model improvements in reliability over time.
+ 
+ This uniform pricing market is stepped for every representative day, which, in the case of this model was 8 days. 
+ 
+ \subsection{Investment Algorithm}
+ 
+Investments in power plants occur at the beginning of each year. Each GenCo sequentially assesses the viability of different power plants. The order of GenCo is randomized every year to prevent certain GenCos having an advantage over others.
+
+Investment in power plants is based upon a net present value (NPV) calculation. NPV is a summation of the present value of a series of present and future cash flow. This metric provides a method for evaluating and comparing investments with cash flows that are spread over many years. 
+
+Equation \ref{eq:npv_eq} is the calculation of NPV, where $t$ is the year of the cash flow, $i$ is the discount rate, $N$ is total number of periods, or lifetime of power plant, and $R_t$ is the net cash flow at time $t$.
+\begin{equation} \label{eq:npv_eq}
+NPV(i, N) = \sum_{t=0}^{N}\frac{R_t}{(1+t)^t}
+\end{equation}
+
+The discount rate set by the GenCo is based upon the WACC \cite{KincheloeStephenC1990TWAC}. We sample from a Gaussian distribution to adjust to adjust for varying risk profiles, opportunity costs and rates of return. Giving us sufficient variance whilst deviating from the expected price.
+
+Future cash flow is based upon predicted earnings, which is based upon a predicted, exogenous price duration curve (PDC). A PDC is the cost of electricity with respect to hours of the year. A central part of this paper is on estimating a suitable predicted PDC that enables us to validate the model.
+
+The SRMC cost of the power plant is calculated by fitting a linear regression to historical \ce{CO2} and fuel price, referred to in Equation \ref{eq:srmc}. 
+
+The plant with the highest NPV is chosen by each of the GenCos.
+ 
+ 
+\subsection{Representative days}
+
+Due to computational restrictions, energy-system models often represent variations in demand, supply, solar irradiance and wind speed by using the data of a limited number of representative historical days \cite{Poncelet2017}.
+
+A number of authors have shown that models with an insufficient time-step granularity leads to an underestimation of the variability of intermittent renewable energy resources (IRES). This leads to an overestimation of the uptake of IRES and an underestimation of flexible technologies~\cite{Ludig2011,Haydt2011}. We exhibit the same problems in our paper \cite{Kell} and in Section \ref{sec:results}.
+
+
+\begin{figure*}
+\centering
+\includegraphics[width=\textwidth]{figures/methods_and_materials/clusters_compared.pdf}
+\label{cluseters_compared}
+\caption{Comparison of number of clusters for accuracy.}
+\end{figure*}
+ 
+\subsection{Problem Formulation}
+
+
+
+
 \begin{itemize}
 	\item Reproducible data
 	\item Summarize previously published results
