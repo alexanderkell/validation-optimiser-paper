@@ -106,7 +106,7 @@
 
 \begin{keyword}
 %% keywords here, in the form: keyword \sep keyword
-Long-term energy modelling \sep model validation \sep Machine learning \sep Optimization
+Long-Term Energy Modelling \sep Model Validation \sep Machine learning \sep Optimization \sep Climate Change
 %% PACS codes here, in the form: \PACS code \sep code
 
 %% MSC codes here, in the form: \MSC code \sep code
@@ -349,6 +349,20 @@ The error metrics do not show a significant from using either the centroids or m
 \caption{Comparison of number of clusters for accuracy.}
 \label{fig:clusters_compared}
 \end{figure*}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.49\textwidth]{figures/methods_and_materials/clusters_results_load.pdf}
+\caption{Representative days of electricity demand.}
+\label{fig:clusters_compared_load}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.49\textwidth]{figures/methods_and_materials/clusters_results_resources.pdf}
+\caption{Representative days of renewable resources.}
+\label{fig:clusters_compared_resources}
+\end{figure}
  
 \subsection{Problem Formulation}
 
@@ -380,10 +394,19 @@ The error metrics do not show a significant from using either the centroids or m
 
 \begin{figure}
 \centering
+\includegraphics[width=0.49\textwidth]{figures/results/yearly_time_step_scenario.pdf}
+\label{uk_historical_mix}
+\caption{Electricity mix actual vs. simulated for validation scenario with a single representative day.}
+\end{figure}
+
+
+\begin{figure}
+\centering
 \includegraphics[width=0.49\textwidth]{figures/results/throughout_years.pdf}
 \label{uk_historical_mix}
-\caption{Electricity generation transition from 2013 to 2018 in the United Kingdom.}
+\caption{Electricity mix actual vs. simulated for validation scenario with eight representative days.}
 \end{figure}
+
 
 
 \begin{figure}
