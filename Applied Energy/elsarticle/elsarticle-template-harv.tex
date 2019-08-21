@@ -244,19 +244,19 @@ The plant with the highest NPV is chosen by each of the GenCos.
  
 \subsection{Representative days}
 
-Due to computational restrictions, energy-system models often represent variations in demand, supply, solar irradiance and wind speed by using the data of a limited number of representative historical days \cite{Poncelet2017}.
+Due to computational restrictions energy-system models often represent variations in demand, supply, solar irradiance and wind speed by using the data of a limited number of representative historical days \cite{Poncelet2017}.
 
-A number of authors have shown that models with an insufficient time-step granularity leads to an underestimation of the variability of intermittent renewable energy resources (IRES). This leads to an overestimation of the uptake of IRES and an underestimation of flexible technologies~\cite{Ludig2011,Haydt2011}. We exhibit the same problems in our paper \cite{Kell} and in Section \ref{sec:results}.
+A number of authors have shown that models with an insufficient time-step granularity leads to an underestimation of the variability of intermittent renewable energy resources (IRES). This leads to an overestimation of the uptake of IRES and an underestimation of flexible technologies~\cite{Ludig2011,Haydt2011}. We exhibit the same problems in our paper \cite{Kell} and later in Section \ref{sec:results}.
 
-To overcome this problem, we used k-means clustering to select representative days of electricity demand, solar irradiance and wind speed for both onshore and offshore in the UK. We used simulated data for wind and solar by Staffell \textit{et al.} \cite{Staffell2016} for the United Kingdom. For load data we used data from gridwatch.co.uk \cite{gridwatch}.
+To overcome this problem we used a k-means clustering approach to select representative days of electricity demand, solar irradiance and wind speed for both onshore and offshore in the UK. We used simulated data for wind and solar by Staffell \textit{et al.} \cite{Staffell2016}. For electricity load data we used data from gridwatch.co.uk \cite{gridwatch}.
 
-We tried using the average value of each of the clusters, which we will refer to in this text as the ``centroids'' technique. We also tried choosing the day that was closest to the centroid by euclidean distance. This will be referred to in the rest of this text as the ``medoids'' technique.
+Once we had clustered all of the time series, we found the average value of each of the clusters centers, which we will refer to in this text as the ``centroids'' technique. In addition to this we chose the day that was closest to the centroid by euclidean distance. This will be referred to in the rest of this text as the ``medoids'' technique.
 
-To select the optimum number of days we used a technique similar to Poncelet \textit{et al.} \cite{Poncelet2017}. We trialled the number of clusters against three different metrics: correlation, normalised root mean squared error and relative energy error ($REE_{av}$). 
+To measure the validity of the optimum number of days we used a technique similar to Poncelet \textit{et al.} \cite{Dhaeseleer2015, Poncelet2017}. We trialled the number of clusters against three different metrics: correlation, normalised root mean squared error and relative energy error ($REE_{av}$). 
 
 
 
-Firstly, the average capacity factor over the selected time series should preserve the annual electricity demand load factors. To evaluate the ability for the representative days, the average value over all the considered time series $p\in P$ compared to the actual average value is used as a metric. This is referred to as $REE_{av}$. Note that in this text $\left|\cdot\right|$ refers to the absolute value, and $\left|\left|\cdot\right|\right|$ refers to the cardinality of a set. Below, the index $t\in T$ refers to a specific time step of the original time series (e.g. hourly interval).
+Firstly, the average capacity factor over the selected time series should preserve the annual electricity demand load factors. To evaluate the ability for the representative days, the average value over all the considered time series $p\in P$ compared to the actual average value is used as a metric. This is referred to as $REE_{av}$. Note that in this text $\left|\cdot\right|$ refers to the absolute value and $\left|\left|\cdot\right|\right|$ refers to the cardinality of a set. Below, the index $t\in T$ refers to a specific time step of the original time series (e.g. hourly interval).
 
 \begin{equation}
 	REE_{av}=\frac
@@ -269,7 +269,7 @@ Firstly, the average capacity factor over the selected time series should preser
 	{\left|\left|P\right|\right|}
 \end{equation}
 
-Another metric is that the distribution of electricity demand and capacity factors for wind and solar must be similar to that of the actual time series. The distribution can be represented by a duration curve ($DC$) of the original time series. We therefore used the normalised root mean squared error between the actual duration curve and representative duration curve. In this context, the duration curve can be constructed by sorting the capacity factor and load data from high to low. The $x-$axis exhibits the proportion of time that each capacity factor represents. The approximation of the duration curve is represented in this text as $\widetilde{DC}_p$.
+Another metric that we wanted to measure was that of the distribution of electricity demand and capacity factors to be similar to that of the actual time series. The distribution can be represented by a duration curve ($DC$) of the original time series. We therefore used the normalised root mean squared error between the actual duration curve and representative duration curve. In this context, the duration curve can be constructed by sorting the capacity factor and electrical load data from high to low. The $x-$axis for the DC exhibits the proportion of time that each capacity factor represents. The approximation of the duration curve is represented in this text as $\widetilde{DC}_p$.
 
 %\begin{equation}
 %	NRMSE_{av}=\frac
@@ -321,14 +321,14 @@ The final metric used is the correlation between the different time series. This
 \begin{equation}
 	CE_{av}=\frac{2}{\left|\left|P\right|\right|\cdot(\left|\left|P\right|\right|-1)}\cdot
 	\left(
-	\sum\limits{p_i\in P}\sum\limits_{p_j\in P,j>i}
+	\sum\limits_{p_i\in P}\sum\limits_{p_j\in P,j>i}
 	\left|
 	corr_{p_i,p_j}-\widetilde{corr}_{p_i,p_j}
 	\right|
 	\right)
 \end{equation}
 
-Where $corr_{p1,p2}$ is the Pearson correlation coefficient between two time series $p_1,p_2\in P$. Here, $V_{p1,t}$ represents the value of time series $p_1$ and $p_2$ respectively. 
+Where $corr_{p1,p2}$ is the Pearson correlation coefficient between two time series $p_1,p_2\in P$. Here, $V_{p1,t}$ represents the value of time series $p_1$ at time step t. 
 
 \begin{equation}
 	corr_{p1,p2}=\frac
@@ -338,10 +338,9 @@ Where $corr_{p1,p2}$ is the Pearson correlation coefficient between two time ser
 	}}
 \end{equation}
 
-Figure \ref{fig:clusters_compared} displays the number of clusters plot against each of the error metrics. For this experiment we chose eight clusters, due to eight being the smallest number with the smallest error metrics. After eight clusters the error metrics do not improve significantly, and $REE_{av}$ deteriorates with number of clusters. However, selecting a number smaller than eight clusters leads to a significant deterioration for both $CE_{av}$ and $NRMSE_{av}$.
+Figure \ref{fig:clusters_compared} displays the number of clusters plot against each of the error metrics. For this experiment we chose eight clusters, due to eight being the smallest number with the best performing error metrics. After eight clusters $NRMSE_{av}$ and $CE_{av}$ do not improve significantly, whilst $REE_{av}$ deteriorates with number of clusters. Selecting less than eight clusters leads to a significant deterioration for both $CE_{av}$ and $NRMSE_{av}$.
 
-The error metrics do not show a significant from using either the centroids or medoids technique. However, we chose to use the medoids technique as we believe this would more accurately model a single day.
-
+The error metrics do not exhibit a significant difference between using either the centroids or medoids technique. However, we chose to use the medoids technique. This was done due to the fact that the extreme high and low values would not be lost due to averaging \cite{Hilbers2019}.
 
 \begin{figure*}
 \centering
@@ -415,6 +414,13 @@ The error metrics do not show a significant from using either the centroids or m
 \includegraphics[width=0.49\textwidth]{figures/results/throughout_years.pdf}
 \label{uk_historical_mix}
 \caption{Electricity mix actual vs. simulated for validation scenario with eight representative days.}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.49\textwidth]{figures/results/best_run_price_dur_curve.pdf}
+\caption{Predicted price curve for investment for most accurate run against simulated run in 2018.}
+\label{fig:best_price_curve}
 \end{figure}
 
 
