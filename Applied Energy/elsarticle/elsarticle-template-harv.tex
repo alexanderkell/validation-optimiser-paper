@@ -393,8 +393,19 @@ For GenCos to adequately make investments they must formulate an expectation of 
 
 Due to the uncertainty of future electricity prices over the horizon of the lifetime of a power plant we have set future electricity prices as an exogenous variable that can be set by the user.
 
-To verify the accuracy of ElecSim we used a genetic algorithm approach to find the optimum linear regression model that would best validate the results from 2013 and 2018.
+To verify the accuracy of ElecSim we used a genetic algorithm approach to find the optimum linear regression model that would best validate the results from 2013 to 2018.
 
+Equation \ref{eq:problem_formulation} details this formally.
+
+\begin{equation}
+	\label{eq:problem_formulation}
+	minimize \sum\limits_{o\in O}\left(
+	\frac{\left|A_o-S_o\right|}
+	{\left|\left|O\right|\right|}
+	\right)
+\end{equation}
+
+Where $o\in O$ refers to the percentage electricity mix output for wind (offshore$+$onshore generation), nuclear, solar, CCGT, and coal for the year 2018. $A_o$ refers to actual electricity mix for 2018 and $S_o$ refers to simulated electricity mix.
 
 \begin{itemize}
 	\item Reproducible data
