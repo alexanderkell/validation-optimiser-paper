@@ -196,7 +196,7 @@ The simulation was initialised with every power plant and generation company (Ge
 Financing of the project was provided by stock shares and debt, with nuclear power plants given an average weighted average cost of capital (WACC) of $0.1$ and non-nuclear given a WACC of $0.059$ \cite{KPMG2017, Paper2012}. Where WACC is the rate that a company is expected to pay on average for its stock and debt.
 
 \subsection{Power Exchange}
-
+\label{sec:power_exchange}
 ElecSim is modelled on a uniform pricing market. This means that bids are sorted with respect to price, and accepted in merit-order. Merit-order in this case indicates the cheapest bids are accepted first. Uniform pricing is a market mechanism in which the highest accepted bid price is paid to all generators irrespective of price bid. This mechanism encourages GenCos to bid their short run marginal cost (SRMC) to ensure that their power plant is dispatched whilst not losing money whilst dispatching.
 
 In the case of ElecSim SRMC is defined as follows:
@@ -340,8 +340,6 @@ Where $corr_{p1,p2}$ is the Pearson correlation coefficient between two time ser
 
 Figure \ref{fig:clusters_compared} displays the number of clusters plot against each of the error metrics. For this experiment we chose eight clusters, due to eight being the smallest number with the best performing error metrics. After eight clusters $NRMSE_{av}$ and $CE_{av}$ do not improve significantly, whilst $REE_{av}$ deteriorates with number of clusters. Selecting less than eight clusters leads to a significant deterioration for both $CE_{av}$ and $NRMSE_{av}$.
 
-The error metrics do not exhibit a significant difference between using either the centroids or medoids technique. However, we chose to use the medoids technique. This was done due to the fact that the extreme high and low values would not be lost due to averaging \cite{Hilbers2019}.
-
 \begin{figure*}
 \centering
 \includegraphics[width=\textwidth]{figures/methods_and_materials/clusters_compared.pdf}
@@ -349,8 +347,9 @@ The error metrics do not exhibit a significant difference between using either t
 \label{fig:clusters_compared}
 \end{figure*}
 
+The error metrics do not exhibit a significant difference between using either the centroids or medoids technique. However, we chose to use the medoids technique. This was done due to the fact that the extreme high and low values would not be lost due to averaging \cite{Hilbers2019}.
 
-
+Figure \ref{fig:clusters_compared_load} and Figure \ref{fig:clusters_compared_resources} display the resultant representative days that were used to represent an entire year in the simulation. A positive correlations between onshore and offshore wind speed remain, which one would expect for the relatively small geography of the United Kingdom can be seen in Figure \ref{fig:clusters_compared_resources}. Between the hours of 96 and 120 a negative correlation of solar irradiance and wind speed is exhibited, which may refer to a particularly sunny and windless day. Whereas between 72 and 96 a particularly windy and sunless day is exhibited.
 
 \begin{figure}
 \centering
@@ -359,6 +358,12 @@ The error metrics do not exhibit a significant difference between using either t
 \label{fig:clusters_compared_load}
 \end{figure}
 
+Figure \ref{fig:clusters_compared_load} refers to the electrical load of the representative days. Whilst the selection of 8 representative days does not represent a seven day week, a similar pattern to a week can be observed, with five days of higher demand, and three days of lower electricity demand.
+
+
+It should be noted that these representative days represent a quasi-temporal year and do not represent actual months.
+
+
 \begin{figure}
 \centering
 \includegraphics[width=0.49\textwidth]{figures/methods_and_materials/clusters_results_resources.pdf}
@@ -366,16 +371,29 @@ The error metrics do not exhibit a significant difference between using either t
 \label{fig:clusters_compared_resources}
 \end{figure}
 
+
+\subsection{Integrating higher temporal granularity}
+
+To integrate the additional temporal granularity of the model, extra time-steps were taken per year. In this scenario we modelled a single year as 8 days. This enabled us to reduce computational runtime, whilst approximating an entire year.
+
+GenCos make bids at the beginning of every time-step (day) and the Power Exchange matches demand with supply in merit-order dispatch using the previously mentioned uniform pricing market in Section \ref{sec:power_exchange}. An example day is shown in Figure \ref{fig:single_dispatched_day}. 
+
+Figure \ref{fig:single_dispatched_day} displays the high utilization of low marginal-cost generators such as nuclear, wind and photovoltaics. At hour 19, an increase in offshore wind leads to a direct decrease in combined cycle gas turbines (CCGT). In contrast to this, a decrease in offshore and onshore between the hours of 8 and 12 lead to an increase in dispatch of coal and CCGT. This is behaviour which one would expect to prevent blackouts and meet demand at all times. This process has enabled us to more closely match fluctuations in IRES.
+
 \begin{figure}
 \centering
 \includegraphics[width=0.49\textwidth]{figures/methods_and_materials/clusters_results_single_day.pdf}
 \caption{Example of a single day of dispatched supply.}
-\label{fig:clusters_compared_load}
+\label{fig:single_dispatched_day}
 \end{figure}
  
 \subsection{Problem Formulation}
 
+For GenCos to adequately make investments they must formulate an expectation of future electricity prices. Future electricity prices are a function of demand and supply, and with renewable electricity generator costs falling future prices are uncertain \cite{IRENA2014}. 
 
+Due to the uncertainty of future electricity prices over the horizon of the lifetime of a power plant we have set future electricity prices as an exogenous variable that can be set by the user.
+
+To verify the accuracy of ElecSim we used a genetic algorithm approach to find the optimum linear regression model that would best validate the results from 2013 and 2018.
 
 
 \begin{itemize}
