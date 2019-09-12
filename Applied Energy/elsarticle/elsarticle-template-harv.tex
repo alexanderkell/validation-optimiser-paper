@@ -44,6 +44,11 @@
 \usepackage{xcolor}
 \usepackage{csvsimple,booktabs}
 
+
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
 %% The lineno packages adds line numbers. Start line numbering with
 %% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
 %% for the whole article with \linenumbers.
@@ -147,13 +152,15 @@ We use a genetic algorithm approach to find an optimal set of price curves predi
 
 There is a desire to validate the ability of energy-models to make long-term predictions. Validation increases confidence in the outputs of a model and leads to an increase in trust amongst the public and policy makers. However, energy models are frequently criticised for being insufficiently validated, with the performance of models rarely checked against historical outcomes \cite{Beckman2011}.
 
-The model OSeMOSYS \cite{Howells2011}, however, is validated against the similar model MARKAL\slash TIMES.  Whereas the model PowerACE shows that realistic prices are achieved through modelling, however do not indicate success in modelling investor behaviour \cite{Ringler2012}.
+The model OSeMOSYS \cite{Howells2011} is, however, validated against the similar model MARKAL\slash TIMES through the use of a case study named UTOPIA which is a simple test energy system bundled with ANSWER, a graphical user interface packaged with the MARKAL model generator \cite{Hunter2013, Noble2004}. Hunter \textit{et al.} use the same case study to validate their model Temoa \cite{Hunter2013}. Whereas the model PowerACE shows that realistic prices are achieved through modelling, however do not indicate success in modelling investor behaviour \cite{Ringler2012}.
 
-However, under the definition by Hodges \textit{et al.} \cite{Hodges} long-range energy forecasts are not validatable \cite{Craig2002}. Under this definition, validatable models must be observable, exhibit constancy of structure in time, exhibit constancy across variations in conditions not specified in the model and it must be possible to collect ample data \cite{Hodges}.
+Under the definition by Hodges \textit{et al.} \cite{Hodges}, however, long-range energy forecasts are not validatable \cite{Craig2002}. Under this definition, validatable models must be observable, exhibit constancy of structure in time, exhibit constancy across variations in conditions not specified in the model and it must be possible to collect ample data \cite{Hodges}.
 
 Whilst it is possible to collect data for energy models, the data covering important characteristics of energy markets are not always measured. Furthermore, the behaviour of the human population and innovation are neither constant or entirely predictable. This leads to the fact that static models cannot keep pace with global long-term evolution. Assumptions made by the modeller may be challenged in the form of unpredictable events, such as the oil shock of 1973.
 
-This, however, does not mean that energy-modelling is not useful for providing advice in the present. A model may fail at predicting the long-term future because it has forecast an undesirable event, which lead to a change in human behaviour. Thus avoiding the original scenario that was predicted.
+This, however, does not mean that energy-modelling is not useful for providing advice in the present. A model may fail at predicting the long-term future because it has forecast an undesirable event, which lead to a change in human behaviour. Thus avoiding the original scenario that was predicted, and can be viewed as a success of the model.
+
+Work by Koomey \textit{et al.} expresses the importance of conducting retrospective studies to help improve models \cite{Koomey2003}. For example, a model can be rerun using historical data in order to determine how much of the error in the original forecast resulted from structural problems in the model itself and how much from incorrect specification of the fundamental drivers of the forecast \cite{Koomey2003}.
 
 A retrospective study published in 2002 by Craig \textit{et al.} focused on the ability for forecasters to accurately predict electricity demand from the 1970s \cite{Craig2002}. They found that actual energy usage in 2000 was at the very lowest end of the forecasts, with only one exception. They found that these forecasts underestimated unmodelled shocks such as the oil crises which lead to increased energy efficiency.
 
@@ -163,9 +170,6 @@ Schurr \textit{et al.} argued against predicting too far ahead in energy modelli
 
 
 Ascher concurs with this view, and states that the most significant factor in model accuracy is the time horizon of the forecast, with the more distant the forecast target, the less accurate, due to unforeseen changes in society as a whole ~\cite{gillespie_1979}.
-
-Work by Koomey \textit{et al.} expresses the importance of conducting retrospective studies to help improve models \cite{Koomey2003}. For example, a model can be rerun using historical data in order to determine how much of the error in the original forecast resulted from structural problems in the model itself and how much from incorrect specification of the fundamental drivers of the forecast \cite{Koomey2003}.
-
 
 It is for the reasons previously described that this paper focuses on a shorter-term (5 year) horizon window when validating the model. This enabled us to increase confidence that the dynamics of the model worked without external shocks and could provide descriptive advice to stakeholders.
 
@@ -185,19 +189,23 @@ It is for the reasons previously described that this paper focuses on a shorter-
 \section{Material and methods}
 \label{sec:methods}
 
-The model, ElecSim, is made up of five distinct sections: power plant data; scenario data; the time-steps of the algorithm; the power exchange and the investment algorithm. ElecSim has been previously published \cite{Kell}, however, amendments have since been made to the model in the form of efficiency improvements as well as increasing the granularity of time-steps from yearly to representative days. In this paper we have used 8 representative days for electricity demand, solar irradiance and offshore and onshore wind speed.
+The model, ElecSim, is made up of five distinct sections: power plant data; scenario data; the time-steps of the algorithm; the power exchange and the investment algorithm. ElecSim has been previously published \cite{Kell}, however, amendments have since been made to the model in the form of efficiency improvements as well as increasing the granularity of time-steps from yearly to representative days. In this paper we have used 8 representative days for electricity demand, solar irradiance and offshore and onshore wind speed. Each representative day was made up of hourly time-steps (24 time-steps per day).
 
 In this section we summarize previously published results and detail the modifications made for this paper. In this paper we initialised the model to a scenario of the United Kingdom, however, the model is generalisable to any country and is dependent on input data.
 
 \subsection{Plant Data}
 
-The simulation was initialised with every power plant and generation company (GenCo) in the United Kingdom using the Department of Business, Energy and Industrial strategy of the British government for the year 2013 \cite{dukes_511}. The individual costs of these power plants were also initialised with data from the Department of Business, Energy and Industrial strategy of the British government \cite{Department2016}. For power plants that were out of the scope of this dataset (pre-2018), historical levelized cost of electricity (LCOE) values were used to infer the granular costs by a scaling factor from the International Energy Agency (IEA)~\cite{IEA2015}. Historical efficiency was also taken from the Energy Information Administration (EIA) \cite{eia_efficiency}. Each of the initialised power plants were initialized with a scaling factor which modified the operation and maintenance costs stated in the dataset provided \cite{Department2016}. This was done to take into account differences in labor, land and breakages between projects. This was sampled from a uniform distribution between 0.3 and 2.0. As well as varying operation and maintenance costs, each of the GenCos purchased fuel at varying prices. This was done to model the element of chance and differing hedging strategies of each of the GenCos. The distribution that this was sampled from was taken from fitting an ARIMA model and sampling from the standard deviation of the residuals \cite{ARIMA}.
+The simulation was initialised with every power plant and generation company (GenCo) in the United Kingdom using a Department of Business, Energy and Industrial Strategy (BEIS) of the British government DUKES dataset for the year 2013 \cite{dukes_511}. The individual costs of these power plants were also initialised with data from the Department of Business, Energy and Industrial strategy of the British government \cite{Department2016}. For power plants that were out of the scope of this dataset (pre-2018), historical levelized cost of electricity (LCOE) values were used to infer the granular costs by a scaling factor from the International Energy Agency (IEA)~\cite{IEA2015}. Historical efficiency was also used, with the data provided by the Energy Information Administration (EIA) \cite{eia_efficiency}. 
 
-Financing of the project was provided by stock shares and debt, with nuclear power plants given an average weighted average cost of capital (WACC) of $0.1$ and non-nuclear given a WACC of $0.059$ \cite{KPMG2017, Paper2012}. Where WACC is the rate that a company is expected to pay on average for its stock and debt.
+Each of the initialised power plants were initialised with a scaling factor that modified the operation and maintenance costs stated in the dataset provided \cite{Department2016}. This was done to take into account differences in labour, land and breakages between projects. This was sampled from a uniform distribution between 0.3 and 2.0. This distribution was chosen by optimisation through the minimisation of error of the initial price duration curve simulated by the model and actual price duration curve for the year 2018 \cite{Kell}.
+
+As well as varying operation and maintenance costs, each of the GenCos purchased fuel at varying prices. This was done to model the element of chance and differing hedging strategies of each of the GenCos. The distribution that this was sampled from was taken from fitting an ARIMA model and sampling from the standard deviation of the residuals \cite{ARIMA}.
+
+Financing of the project was provided by stock shares and debt, with nuclear power plants given an average weighted average cost of capital (WACC) of $10\%$ and non-nuclear a WACC of $5.9\%$ \cite{KPMG2017, Paper2012}. WACC is the rate that a company is expected to pay on average for its stock and debt per year.
 
 \subsection{Power Exchange}
 \label{sec:power_exchange}
-ElecSim is modelled on a uniform pricing market. This means that bids are sorted with respect to price, and accepted in merit-order. Merit-order in this case indicates the cheapest bids are accepted first. Uniform pricing is a market mechanism in which the highest accepted bid price is paid to all generators irrespective of price bid. This mechanism encourages GenCos to bid their short run marginal cost (SRMC) to ensure that their power plant is dispatched whilst not losing money whilst dispatching.
+ElecSim is modelled on a uniform pricing market. This means that bids are sorted with respect to price, and accepted in merit-order. Merit-order in this case indicates the cheapest bids are accepted first. Uniform pricing is a market mechanism in which the highest accepted bid price is paid to all generators irrespective of price bid. This mechanism encourages GenCos to bid their short run marginal cost (SRMC) to ensure that their power plant is dispatched whenever it is profitable to do so.
 
 In the case of ElecSim SRMC is defined as follows:
 \begin{equation}
@@ -205,22 +213,22 @@ In the case of ElecSim SRMC is defined as follows:
 	SRMC = O\&M_{var}+CO_{2price}+\left(fuel_{price}\times mod_{fuel}\right)
 \end{equation}
 
-Where $O\&M_{var}$ is the variable operating and maintenance costs, $CO_{2price}$ is the carbon tax, $fuel_{price}$ is the cost of the respective fuel and $mod_{fuel}$ is the fuel price modifier. These are all in the units of  $\textsterling\slash MWh$. 
+Where $O\&M_{var}$ is the variable operating and maintenance costs, $CO_{2price}$ is the carbon tax, $fuel_{price}$ is the cost of the respective fuel and $mod_{fuel}$ is the fuel price modifier. These are in the units of  $\textsterling\slash MWh$, apart from $mod_{fuel}$ which is a scaling factor. 
 
 Each of the GenCos submit a bid based on the SRMC of each of their plants at the start of every representative day, to model the day-ahead market. 
 \begin{equation}
-	Bid = SRMC\times Cap_{fac} \times Avail_{fac}
+	Bid_{size} = Cap_{max}\times Cap_{fac} \times Avail_{fac}
 \end{equation}
 
-Where $Cap_{fac}$ and $Avail_{fac}$ is the capacity and availability factors of the plants respectively. The capacity factor is defined as the actual electrical energy produced over a given time period divided by the maximum possible electrical energy is could have produced. This can be impacted by regulatory constraints, market forces and resource availability. For example, higher capacity factors are common for photovoltaics in the summer, and lower in winter \cite{Kell}.
+Where $Cap_{fac}$ and $Avail_{fac}$ is the capacity and availability factors of the plants respectively, and $Cap_{max}$ is the maximum capacity of a power plant in $MW$. $Bid_{size}$ is the amount of electrical power to be provided by the respective generator. The capacity factor is defined as the actual electrical energy produced over a given time period divided by the maximum possible electrical energy it could have produced. This can be impacted by regulatory constraints, market forces and resource availability. For example, higher capacity factors are common for photovoltaics in the summer, and lower in winter \cite{Kell}.
 
 \begin{equation}
 	Cap_{fac}=\frac{energy_{produced}}{energy_{max}}
 \end{equation}
 
- Availability is the percentage of time that a power plant is able to produce electricity. This is typically reduced by outages and breakdowns. We integrate historical data to model improvements in reliability over time.
+ The availability factor is the percentage of time that a power plant is able to produce electricity. This is typically reduced by outages and breakdowns. We integrate historical data to model improvements in reliability over time.
  
- This uniform pricing market is stepped for every representative day, which, in the case of this model was 8 days. 
+ This uniform pricing market is stepped for every representative day, which, in the case of this model was 8 days, modelled at an hour interval (24 time-steps per day). 
  
  \subsection{Investment Algorithm}
  
@@ -233,7 +241,7 @@ Equation \ref{eq:npv_eq} is the calculation of NPV, where $t$ is the year of the
 NPV(i, N) = \sum_{t=0}^{N}\frac{R_t}{(1+t)^t}
 \end{equation}
 
-The discount rate set by the GenCo is based upon the WACC \cite{KincheloeStephenC1990TWAC}. We sample from a Gaussian distribution to adjust to adjust for varying risk profiles, opportunity costs and rates of return. Giving us sufficient variance whilst deviating from the expected price.
+The discount rate set by the GenCo is based upon the WACC \cite{KincheloeStephenC1990TWAC}. We sample from a Gaussian distribution to adjust for varying risk profiles, opportunity costs and rates of return. Giving us sufficient variance whilst deviating from the expected price.
 
 Future cash flow is based upon predicted earnings, which is based upon a predicted, exogenous price duration curve (PDC). A PDC is the cost of electricity with respect to hours of the year. A central part of this paper is on estimating a suitable predicted PDC that enables us to validate the model.
 
@@ -248,7 +256,7 @@ Due to computational restrictions energy-system models often represent variation
 
 A number of authors have shown that models with an insufficient time-step granularity leads to an underestimation of the variability of intermittent renewable energy resources (IRES). This leads to an overestimation of the uptake of IRES and an underestimation of flexible technologies~\cite{Ludig2011,Haydt2011}. We exhibit the same problems in our paper \cite{Kell} and later in Section \ref{sec:results}.
 
-To overcome this problem we used a k-means clustering approach to select representative days of electricity demand, solar irradiance and wind speed for both onshore and offshore in the UK. We used simulated data for wind and solar by Staffell \textit{et al.} \cite{Staffell2016}. For electricity load data we used data from gridwatch.co.uk \cite{gridwatch}.
+To overcome this problem we used a K-means clustering approach to select representative days of electricity demand, solar irradiance and wind speed for both onshore and offshore in the UK. We used simulated data for wind and solar by Staffell \textit{et al.} \cite{Staffell2016}. For electricity load data we used data from gridwatch.co.uk \cite{gridwatch}.
 
 Once we had clustered all of the time series, we found the average value of each of the clusters centers, which we will refer to in this text as the ``centroids'' technique. In addition to this we chose the day that was closest to the centroid by euclidean distance. This will be referred to in the rest of this text as the ``medoids'' technique.
 
@@ -349,7 +357,7 @@ Figure \ref{fig:clusters_compared} displays the number of clusters plot against 
 
 The error metrics do not exhibit a significant difference between using either the centroids or medoids technique. However, we chose to use the medoids technique. This was done due to the fact that the extreme high and low values would not be lost due to averaging \cite{Hilbers2019}.
 
-Figure \ref{fig:clusters_compared_load} and Figure \ref{fig:clusters_compared_resources} display the resultant representative days that were used to represent an entire year in the simulation. A positive correlations between onshore and offshore wind speed remain, which one would expect for the relatively small geography of the United Kingdom can be seen in Figure \ref{fig:clusters_compared_resources}. Between the hours of 96 and 120 a negative correlation of solar irradiance and wind speed is exhibited, which may refer to a particularly sunny and windless day. Whereas between 72 and 96 a particularly windy and sunless day is exhibited.
+Figure \ref{fig:clusters_compared_load} and Figure \ref{fig:clusters_compared_resources} display the resultant representative days that were used to represent an entire year in the simulation. A positive correlation between onshore and offshore wind speed can be seen in Figure \ref{fig:clusters_compared_resources}, which one would expect for the relatively small geography of the United Kingdom. Between the hours of 96 and 120 a negative correlation of solar irradiance and wind speed is exhibited, which may refer to a particularly sunny and windless day. Whereas between 72 and 96 a particularly windy and sunless day is exhibited.
 
 \begin{figure}
 \centering
@@ -358,10 +366,7 @@ Figure \ref{fig:clusters_compared_load} and Figure \ref{fig:clusters_compared_re
 \label{fig:clusters_compared_load}
 \end{figure}
 
-Figure \ref{fig:clusters_compared_load} refers to the electrical load of the representative days. Whilst the selection of 8 representative days does not represent a seven day week, a similar pattern to a week can be observed, with five days of higher demand, and three days of lower electricity demand.
-
-
-It should be noted that these representative days represent a quasi-temporal year and do not represent actual months.
+Figure \ref{fig:clusters_compared_load} refers to the electrical load of the representative days. It should be noted that these representative days represent a quasi-temporal year and do not represent actual months.
 
 
 \begin{figure}
@@ -378,7 +383,7 @@ To integrate the additional temporal granularity of the model, extra time-steps 
 
 GenCos make bids at the beginning of every time-step (day) and the Power Exchange matches demand with supply in merit-order dispatch using the previously mentioned uniform pricing market in Section \ref{sec:power_exchange}. An example day is shown in Figure \ref{fig:single_dispatched_day}. 
 
-Figure \ref{fig:single_dispatched_day} displays the high utilization of low marginal-cost generators such as nuclear, wind and photovoltaics. At hour 19, an increase in offshore wind leads to a direct decrease in combined cycle gas turbines (CCGT). In contrast to this, a decrease in offshore and onshore between the hours of 8 and 12 lead to an increase in dispatch of coal and CCGT. This is behaviour which one would expect to prevent blackouts and meet demand at all times. This process has enabled us to more closely match fluctuations in IRES.
+Figure \ref{fig:single_dispatched_day} displays the high utilization of low marginal-cost generators such as nuclear, wind and photovoltaics. At hour 19, an increase in offshore wind leads to a direct decrease in CCGT. In contrast to this, a decrease in offshore and onshore between the hours of 8 and 12 lead to an increase in dispatch of coal and CCGT. This is behaviour which one would expect to prevent blackouts and meet demand at all times. This process has enabled us to more closely match fluctuations in IRES.
 
 \begin{figure}
 \centering
@@ -389,11 +394,11 @@ Figure \ref{fig:single_dispatched_day} displays the high utilization of low marg
  
 \subsection{Problem Formulation}
 
-For GenCos to adequately make investments they must formulate an expectation of future electricity prices. Future electricity prices are a function of demand and supply, and with renewable electricity generator costs falling future prices are uncertain \cite{IRENA2014}. 
+For GenCos to adequately make investments they must formulate an expectation of future electricity prices over the lifetime of a plant. Future electricity prices are a function of demand and supply, and with renewable electricity generator costs falling future prices are uncertain \cite{IRENA2014}. 
 
-Due to the uncertainty of future electricity prices over the horizon of the lifetime of a power plant we have set future electricity prices as an exogenous variable that can be set by the user.
+Due to the uncertainty of future electricity prices over the horizon of the lifetime of a power plant we have set future electricity prices as an exogenous variable that can be set by the user in ElecSim.
 
-To verify the accuracy of ElecSim we used a genetic algorithm approach to find the optimum linear regression model that would best validate the results from 2013 to 2018.
+To verify the accuracy of ElecSim we used a simple genetic algorithm approach to find the optimum price duration curve in the form of a linear regression model. We validated between the years of 2013 and 2018.
 
 Equation \ref{eq:problem_formulation} details this formally.
 
@@ -405,7 +410,40 @@ Equation \ref{eq:problem_formulation} details this formally.
 	\right)
 \end{equation}
 
-Where $o\in O$ refers to the percentage electricity mix output for wind (offshore$+$onshore generation), nuclear, solar, CCGT, and coal for the year 2018. $A_o$ refers to actual electricity mix for 2018 and $S_o$ refers to simulated electricity mix.
+Where $o\in O$ refers to the percentage electricity mix output for wind (offshore $+$ onshore generation), nuclear, solar, CCGT, and coal for the year 2018. $A_o$ refers to actual electricity mix for 2018 and $S_o$ refers to simulated electricity mix.
+
+We compared our higher granularity time-step results with a time-step of 20 steps per year, in comparison to 192 time-steps per year using representative days.
+
+\subsection{Genetic Algorithms}
+
+Genetic Algorithms (GAs) are a type of evolutionary algorithm. In this section we detail the genetic algorithm used in this paper.
+
+Initially, a population $P_{0}$ is generated for generation 0. Each of these populations are evaluated for their fitness. A subset of these individuals $C_{t+1} \subset P_{t}$ are chosen for mating. This subset is selected proportionally to their fitness. With `Fitter' individuals having a higher change of reproducing to create the offspring group $C'_{t+1}$. $C'_{t+1}$ have characteristics dependent on the genetic operators: crossover and mutation. The genetic operators are an implementation decision \cite{FogelDavidB2009}. 
+
+Once the new population has been created, the new population $P_{t+1}$ is created by merging individuals from $C'_{t+1}$ and $P_{t}$. See Algorithm \ref{genetic-algorithm} for detailed pseudocode.
+%
+\begin{algorithm}[t]
+\begin{algorithmic}[1]
+\State $t=0$
+\State initialize $P_{t}$
+\State evaluate structures in $P_{t}$
+\While {termination condition not satisfied}
+\State $t=t+1$
+\State select reproduction $C_{t}$ from $P_{t-1}$
+\State recombine and mutate structures in $C_{t}$
+
+forming $C'_{t}$
+\State evaluate structures in $C'_{t}$
+\State select each individual for $P_{t}$ from $C'_{t}$ 
+
+or $P_{t-1}$
+\EndWhile
+\caption{Genetic algorithm \cite{FogelDavidB2009}}
+\label{genetic-algorithm}
+\end{algorithmic}
+\end{algorithm}
+
+
 
 \begin{itemize}
 	\item Reproducible data
@@ -413,37 +451,27 @@ Where $o\in O$ refers to the percentage electricity mix output for wind (offshor
 	\item Modifications of previous results for this paper
 \end{itemize}
 
-\section{Calculations}
-\label{sec:calculations}
-
-\begin{itemize}
-	\item Practical development
-\end{itemize}
-
 \section{Results}
 \label{sec:results}
 
-\begin{table}[htb]
-    \centering
-\csvautobooktabular{table_data/results/error_metrics.csv}
-    \caption{Error metrics for time series forecast from 2013 to 2018}\label{table:metrics}
-\end{table}
+
+\subsection{Validation results and comparison}
 
 
-\begin{figure}
-\centering
-\includegraphics[width=0.49\textwidth]{figures/results/yearly_time_step_scenario.pdf}
-\label{uk_historical_mix}
-\caption{Electricity mix actual vs. simulated for validation scenario with a single representative day.}
-\end{figure}
+Figure \ref{fig:actual_vs_simulated_validation} shows the simulated electricity mix compared to the actual electricity mix between the years of 2013 to 2018 for the best price duration parameter set.
 
 
 \begin{figure}
 \centering
 \includegraphics[width=0.49\textwidth]{figures/results/throughout_years.pdf}
-\label{uk_historical_mix}
 \caption{Electricity mix actual vs. simulated for validation scenario with eight representative days.}
+\label{fig:actual_vs_simulated_validation}
 \end{figure}
+
+
+Figure \ref{fig:best_price_curve} displays the predicted price duration curve used by the GenCos to achieve the most optimal electricity mix. Where the black line is the price duration curve simulated in 2018, and the red line is the optimal predicted electricity mix. 
+
+The optimal predicted electricity mix.
 
 \begin{figure}
 \centering
@@ -454,11 +482,46 @@ Where $o\in O$ refers to the percentage electricity mix output for wind (offshor
 
 
 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.49\textwidth]{figures/results/throughout_years_beis_elecsim_comparison.pdf}
+\caption{Comparison of actual electricity mix vs. ElecSim vs. BEIS projections.}
+\label{fig:beis_elecsim_historic_comparison}
+\end{figure}
+
+
+
+
+\begin{table}[htb]
+    \centering
+\csvautobooktabular{table_data/results/error_metrics.csv}
+    \caption{Error metrics for time series forecast from 2013 to 2018}
+    \label{table:metrics}
+\end{table}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.49\textwidth]{figures/results/yearly_time_step_scenario.pdf}
+\caption{Electricity mix actual vs. simulated for validation scenario with a single representative day.}
+\label{uk_historical_mix}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
 \begin{figure}
 \centering
 \includegraphics[width=0.46\textwidth]{figures/results/best_run.pdf}
-\label{uk_historical_mix}
 \caption{Electricity generation transition from 2013 to 2018 in the United Kingdom.}
+\label{fig:uk_validated_results}
 \end{figure}
 
 \begin{itemize}
