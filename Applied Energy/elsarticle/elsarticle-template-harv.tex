@@ -186,8 +186,8 @@ It is for the reasons previously described that this paper focuses on a shorter-
 
 
 
-\section{Material and methods}
-\label{sec:methods}
+\section{Material}
+\label{sec:material}
 
 The model, ElecSim, is made up of five distinct sections: power plant data; scenario data; the time-steps of the algorithm; the power exchange and the investment algorithm. ElecSim has been previously published \cite{Kell}, however, amendments have since been made to the model in the form of efficiency improvements as well as increasing the granularity of time-steps from yearly to representative days. In this paper we have used 8 representative days for electricity demand, solar irradiance and offshore and onshore wind speed. Each representative day was made up of hourly time-steps (24 time-steps per day).
 
@@ -249,7 +249,8 @@ The SRMC cost of the power plant is calculated by fitting a linear regression to
 
 The plant with the highest NPV is chosen by each of the GenCos.
  
- 
+\section{Methods}
+\label{sec:methods}
 \subsection{Representative days}
 \label{ssec:representative_days}
 Due to computational restrictions energy-system models often represent variations in demand, supply, solar irradiance and wind speed by using the data of a limited number of representative historical days \cite{Poncelet2017}.
@@ -507,7 +508,16 @@ However, the BEIS projection overestimates the uptake in renewables in the year 
 \label{fig:beis_elecsim_historic_comparison}
 \end{figure}
 
-We display the error metrics to evaluate our models 5 year projections in table \ref{table:metrics}. Where MAE is mean absolute squared error, MASE is mean absolute scaled error, RMSE is root mean squared error, and SD is standard deviation.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.49\textwidth]{figures/results/comparison-between-beis-elecsim-actual.png}
+\caption{Comparison of actual electricity mix vs. ElecSim vs. BEIS projections and taking three coal power plants out of service.}
+\label{fig:beis_elecsim_historic_comparison}
+\end{figure}
+
+
+We display the error metrics to evaluate our models 5 year projections in Table \ref{table:metrics}. Where MAE is mean absolute squared error, MASE is mean absolute scaled error, RMSE is root mean squared error, and SD is standard deviation.
 
 We are able to improve the projections for all but nuclear based on the naive forecasting approach using ElecSim. Where in the naive approach we predict the next time-step by using the last known time-step. 
 
