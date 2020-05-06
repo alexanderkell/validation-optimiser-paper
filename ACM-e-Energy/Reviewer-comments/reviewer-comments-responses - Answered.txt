@@ -7,7 +7,5 @@ Some minor comments:
 - Further define these mathematically and clearly
 
 
-+ In Equations 10 and 11 it is unclear why the duration curves are used, and not the actual and approximated time series.
-
 - Check all of these comments.
 
