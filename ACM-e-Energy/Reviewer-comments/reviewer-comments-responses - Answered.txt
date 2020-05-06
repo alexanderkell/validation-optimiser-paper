@@ -1,14 +1,4 @@
 
-
-The article leaves one wondering much about how representative days were chosen. $REE_av$ increases as cluster numbers increase. This is strange - why is this observed? Also, why are all these different metrics used to choose cluster count? What does each represent that the other does not? What do the values mean; e.g. is NRMSE = 5 relatively high or low?
-
-- Look further into this.
-
-The study presented in the paper builds on the framework ElecSim, but unfortunately, this model is not described sufficiently in the paper. Accordingly it is very difficult to assess the improvements of the model due to the representative days, and the role of the optimized predicted price duration curve. While the overall presentation is often very detailed, some relevant definitions are not given in detail or remain unclear.
-
-- I'm not sure we have much space to put in full details about ElecSim?
-- Check definitions
-
 Detailed comments on the paper
 ------------------------------
 Some minor comments:
@@ -16,22 +6,8 @@ Some minor comments:
 
 - Further define these mathematically and clearly
 
-+ The price duration curve was modelled linearly, is this a limiting factor?
 
-- Potentially could be, but argue that it is the closest fit. Potentially further work here to compare fits.
-
-+ The genetic algorithms for doing the optimization have been briefly motivated, but since this a central method of the study, more discussions or studies would have been interesting.
-
-- Can further speak about this if we have time?
-
-+ There is a typo in Equation 1, $t$ should be replaced by $i$. - DONE
-+ Equation 2 should be checked - why is there a summation over $t$? What is the index $m$? Why are the capital costs included?
-+ There are typos in Equation 4, in the $\min$ the first $m$ should be replaced by $m_y$, and the second $m$ should be replaced by $c_y$. - DONE
-+ The explanation of the procedure from Equation 7 to Equation 9 should be clarified.
 + In Equations 10 and 11 it is unclear why the duration curves are used, and not the actual and approximated time series.
-+ Are references [32] and [33] the same? - DONE
 
 - Check all of these comments.
-
-
 
