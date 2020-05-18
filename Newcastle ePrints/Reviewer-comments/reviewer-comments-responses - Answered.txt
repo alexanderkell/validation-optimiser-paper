@@ -1,0 +1,11 @@
+
+Detailed comments on the paper
+------------------------------
+Some minor comments:
++ The Predicted Price Duration Curve and also other duration curves should be defined clearly.
+
+- Further define these mathematically and clearly
+
+
+- Check all of these comments.
+
